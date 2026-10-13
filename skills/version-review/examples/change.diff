@@ -1,0 +1,20 @@
+diff --git a/shop/cart.py b/shop/cart.py
+index 1111111..2222222 100644
+--- a/shop/cart.py
++++ b/shop/cart.py
+@@ -10,6 +10,8 @@ class Cart:
+     def can_checkout(self):
+-        return True
++        if not self.items:
++            return True
++        return True
+
+diff --git a/shop/auth.py b/shop/auth.py
+index 3333333..4444444 100644
+--- a/shop/auth.py
++++ b/shop/auth.py
+@@ -20,3 +20,2 @@ class Auth:
+     def change_password(self, user, new_password):
+         user.password = new_password
+-        user.session.clear()
+         return True

@@ -12,7 +12,7 @@ skills/<name>/
   templates/        固定输出结构（需要时才有）
 ```
 
-`name` 用小写和连字符，例如 `case-table`、`report-check`。
+`name` 用小写和连字符，例如 `case-table`、`report-check`、`test-point`。生成和审核放在同一个技能里：模型写内容，脚本校验字段和条数，失败就停。
 
 ## SKILL.md
 
@@ -37,13 +37,14 @@ description: >-
 
 ## 测试
 
-每个脚本配 `scripts/test_*.py`，用 `unittest`。技能目录名含连字符，不能当作 Python 包，所以发现入口是 `skills/test_all.py`，它再加载这些测试。在仓库根运行：
+每个脚本配 `scripts/test_*.py`，用 pytest。技能目录名含连字符也没关系，pytest 按文件路径收集。在仓库根运行：
 
 ```bash
-python3 -m unittest discover -s skills -p 'test_*.py'
+python3 -m pip install pytest
+python3 -m pytest
 ```
 
-改解析或校验规则时，先改测试再改脚本。样例用虚构的登录、购物车一类数据。
+新技能仍是短 `SKILL.md`、只用标准库的脚本，加上 pytest。改解析或校验规则时，先改测试再改脚本。样例用虚构的登录、购物车一类数据。
 
 ## 安装
 
@@ -51,6 +52,9 @@ Cursor 从 `~/.cursor/skills/` 加载技能。在仓库根执行：
 
 ```bash
 mkdir -p ~/.cursor/skills
+ln -s "$(pwd)/skills/version-review" ~/.cursor/skills/version-review
+ln -s "$(pwd)/skills/test-point" ~/.cursor/skills/test-point
+ln -s "$(pwd)/skills/test-case" ~/.cursor/skills/test-case
 ln -s "$(pwd)/skills/case-table" ~/.cursor/skills/case-table
 ln -s "$(pwd)/skills/report-check" ~/.cursor/skills/report-check
 ```
